@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
-import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, PaginationModule, ButtonsModule } from 'ngx-bootstrap';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { NavComponent } from './nav/nav.component';
 import { AuthService } from './_services/auth.service';
@@ -29,6 +29,9 @@ import { MemberEditResolver } from './_resolver/member-edit-resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ListResolver } from './_resolver/list.resolver';
+import { MessagesResolver } from './_resolver/messages-resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -49,7 +52,8 @@ export function tokenGetter() {
         MemberDetailComponent,
         MemberEditComponent,
         PhotoEditorComponent,
-        TimeAgoPipe
+        TimeAgoPipe,
+        MemberMessagesComponent
     ],
     imports: [
         BrowserModule,
@@ -58,9 +62,11 @@ export function tokenGetter() {
         ReactiveFormsModule,
         NgxGalleryModule,
         FileUploadModule,
+        ButtonsModule.forRoot(),
         BsDropdownModule.forRoot(),
         RouterModule.forRoot(appRoute),
         TabsModule.forRoot(),
+        PaginationModule.forRoot(),
         JwtModule.forRoot({
             config: {
                 tokenGetter: tokenGetter,
@@ -78,7 +84,9 @@ export function tokenGetter() {
         UserService,
         MemberDetailResolver,
         MemberListResolver,
-        MemberEditResolver
+        MemberEditResolver,
+        ListResolver,
+        MessagesResolver
     ],
     bootstrap: [
         AppComponent
